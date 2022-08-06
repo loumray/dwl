@@ -2207,12 +2207,9 @@ togglescratch(const Arg *arg)
 
 	if (found) {
 		c->tags = VISIBLEON(c, selmon) ? 0 : selmon->tagset[selmon->seltags];
-		focusclient(NULL, 0);
-		if (VISIBLEON(c, selmon)) {
-			focusclient(c, 0);
-		}
-		arrange(selmon);
 
+		focusclient(c->tags == 0 ? focustop(selmon) : c, 1);
+		arrange(selmon);
 	} else{
 		spawnscratch(arg);
 	}
