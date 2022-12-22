@@ -1,10 +1,12 @@
 /* appearance */
-static const int sloppyfocus        = 1;  /* focus follows mouse */
-static const unsigned int borderpx  = 1;  /* border pixel of windows */
-static const int lockfullscreen     = 1;  /* 1 will force focus on the fullscreen window */
-static const float rootcolor[]      = {0.3, 0.3, 0.3, 1.0};
-static const float bordercolor[]    = {0.5, 0.5, 0.5, 1.0};
-static const float focuscolor[]     = {1.0, 0.0, 0.0, 1.0};
+static const int sloppyfocus               = 1;  /* focus follows mouse */
+static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
+static const unsigned int borderpx         = 1;  /* border pixel of windows */
+static const float rootcolor[]             = {0.3, 0.3, 0.3, 1.0};
+static const float bordercolor[]           = {0.5, 0.5, 0.5, 1.0};
+static const float focuscolor[]            = {1.0, 0.0, 0.0, 1.0};
+/* To conform the xdg-protocol, set the alpha to zero to restore the old behavior */
+static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -42,7 +44,7 @@ static const struct xkb_rule_names xkb_rules = {
 	/* example:
 	.options = "ctrl:nocaps",
 	*/
-	.options = "",
+	.options = NULL,
 };
 
 static const int repeat_rate = 25;
@@ -50,10 +52,49 @@ static const int repeat_delay = 600;
 
 /* Trackpad */
 static const int tap_to_click = 1;
+static const int tap_and_drag = 1;
+static const int drag_lock = 1;
 static const int natural_scrolling = 0;
+static const int disable_while_typing = 1;
+static const int left_handed = 0;
+static const int middle_button_emulation = 0;
+/* You can choose between:
+LIBINPUT_CONFIG_SCROLL_NO_SCROLL
+LIBINPUT_CONFIG_SCROLL_2FG
+LIBINPUT_CONFIG_SCROLL_EDGE
+LIBINPUT_CONFIG_SCROLL_ON_BUTTON_DOWN
+*/
+static const enum libinput_config_scroll_method scroll_method = LIBINPUT_CONFIG_SCROLL_2FG;
 
-/* If you want to use the windows key change this to WLR_MODIFIER_LOGO */
+/* You can choose between:
+LIBINPUT_CONFIG_CLICK_METHOD_NONE       
+LIBINPUT_CONFIG_CLICK_METHOD_BUTTON_AREAS       
+LIBINPUT_CONFIG_CLICK_METHOD_CLICKFINGER 
+*/
+static const enum libinput_config_click_method click_method = LIBINPUT_CONFIG_CLICK_METHOD_BUTTON_AREAS;
+
+/* You can choose between:
+LIBINPUT_CONFIG_SEND_EVENTS_ENABLED
+LIBINPUT_CONFIG_SEND_EVENTS_DISABLED
+LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE
+*/
+static const uint32_t send_events_mode = LIBINPUT_CONFIG_SEND_EVENTS_ENABLED;
+
+/* You can choose between:
+LIBINPUT_CONFIG_ACCEL_PROFILE_FLAT
+LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE
+*/
+static const enum libinput_config_accel_profile accel_profile = LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE;
+static const double accel_speed = 0.0;
+/* You can choose between:
+LIBINPUT_CONFIG_TAP_MAP_LRM -- 1/2/3 finger tap maps to left/right/middle
+LIBINPUT_CONFIG_TAP_MAP_LMR -- 1/2/3 finger tap maps to left/middle/right
+*/
+static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TAP_MAP_LRM;
+
+/* If you want to use the windows key for MODKEY, use WLR_MODIFIER_LOGO */
 #define MODKEY WLR_MODIFIER_ALT
+
 #define TAGKEYS(KEY,SKEY,TAG) \
 	{ MODKEY,                    KEY,            view,            {.ui = 1 << TAG} }, \
 	{ MODKEY|WLR_MODIFIER_CTRL,  KEY,            toggleview,      {.ui = 1 << TAG} }, \
@@ -64,7 +105,7 @@ static const int natural_scrolling = 0;
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "alacritty", NULL };
+static const char *termcmd[] = { "foot", NULL };
 static const char *menucmd[] = { "bemenu-run", NULL };
 
 /* named scratchpads - First arg only serves to match against key in rules*/
