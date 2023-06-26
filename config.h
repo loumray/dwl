@@ -17,14 +17,20 @@ static const char *const autostart[] = {
 static const int tagcount = 9;
 
 static const Rule rules[] = {
-	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor scratchkey*/
+	/* x, y, width, height are floating only */
+	/* when x or y == 0 the client is placed at the center of the screen */
+	/* when width or height == 0 the default size of the client is used */
+	/* app_id     title       tags mask     isfloating  isterm          noswallow   monitor  x    y    width height scratchkey   */
+	/* x, y, width, height = 0 -> use default */
 	/* examples:
-	{ "Gimp",     NULL,       0,            1,          0,      1,         -1 },
+	{ "Gimp",     NULL,       0,            1,          0,              1,         -1,       0,   0,   0,    0,   0 },
 	*/
-	{ "firefox",  NULL,       1 << 8,       0,          0,      1,         -1,     0},
-	{ NULL,     "scratchpad", 0,            1,          0,      0,         -1,     's' },
+	{ "Alacritty", NULL,      0,            0,          1,              0,         -1,       0,   0,   0,    0,   0 },
+	{ NULL,       "termbox",  0,            1,          0,              0,         -1,       0,   0,   1400, 800, 't'  },
+	{ NULL,       "chatbox",  0,            1,          0,              0,         -1,       0,   0,   1400, 800, 'c' },
+	{ NULL,       "calcbox",  0,            1,          0,              0,         -1,       0,   0,   800,  300, 'a' },
+	{ NULL,       "htopbox",  0,            1,          0,              0,         -1,       0,   15,   1920, 800, 'i' },
 };
-
 /* layout(s) */
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -121,15 +127,18 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 static const char *termcmd[] = { "alacritty", NULL };
 static const char *menucmd[] = { "wofi", "--show", "drun", "-i", "-p", "Execute:", NULL };
 
-/* named scratchpads - First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = { "s", "alacritty", "-t", "scratchpad", NULL };
+/* namedscratchpads - First arg only serves to match against key in rules*/
+static const char *tmuxcmd[] = { "t", "alacritty", "-t", "termbox", "-e", "tmuxdd", NULL };
+// static const char *chatcmd[] = { "c", "alacritty", "-t", "chatbox", "-e", "hangups", NULL };
+// static const char *calccmd[] = { "a", "alacritty", "-t", "calcbox", "-e", "simplecalc", NULL };
+// static const char *htopcmd[] = { "i", "alacritty", "-t", "htopbox", "-e", "htop", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = termcmd} },
-	{ MODKEY,                    XKB_KEY_u,          togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY,                    XKB_KEY_u,          togglescratch,  {.v = tmuxcmd } },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_J,          movestack,      {.i = +1} },

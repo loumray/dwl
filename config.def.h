@@ -17,13 +17,17 @@ static const char *const autostart[] = {
 static const int tagcount = 9;
 
 static const Rule rules[] = {
-	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor scratchkey*/
+	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor x     y    width height scratchkey*/
+	/* x, y, width, height = 0 -> use default */
 	/* examples:
 	{ "Gimp",     NULL,       0,            1,          0,      1,         -1 },
 	*/
-	{ "firefox",  NULL,       1 << 8,       0,          0,      1,         -1,     0},
-	{ NULL,     "scratchpad", 0,            1,          0       0          -1,     's' },
+	{ "firefox",  NULL,       1 << 8,       0,          0,      1,         -1,     200,  100, 0,    0,     0},
+	{ NULL,     "scratchpad", 0,            1,          0       0          -1,     0,    0,   1400, 800,  's' },
 };
+	/* x, y, width, height are floating only
+	* When x or y == 0 the client is placed at the center of the screen,
+	* when width or height == 0 the default size of the client is used*/
 
 /* layout(s) */
 static const Layout layouts[] = {
