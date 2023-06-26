@@ -1,3 +1,48 @@
+# A custom build of dwl
+
+This is a custom build of dwl adapted for my workflow. Feel free to use it, fork it, improve it.
+
+## TODO
+- fix main screen not showing on laptop screen
+
+- patch with touchpad and mouse different setting:
+https://github.com/djpohly/dwl/issues/372
+
+- patch for  bottom stack layout
+- cycle layouts then?
+- patch pertag -> so mfact layout are per tag
+
+- adjust scratchpad to move to appear on focused monitor instead of origin ?
+(see focusmon...?)
+
+## Patches and features
+
+- XWayland
+<!-- - alwayscenter -->
+4 <!-- - autostart -->
+<!-- - customfloat -->
+<!-- - keybord layout status -->
+x1 <!-- - monitor-config -->
+2 <!-- - movestack -->
+ <!-- - namedscratchpads -->
+3 <!-- - shiftview -->
+5 <!-- - swallow -->
+<!-- - touchscreen -->
+6 <!-- - unclutter -->
+
+## Credits
+
+Keep in mind everyone that contributed to this project. Thank you!
+
+- All [dwl contributors](https://github.com/djpohly/dwl/graphs/contributors) & users
+- unclutter, shiftview & alwayscenter patches by [guidocella](https://github.com/guidocella)
+- autostart by [Sevz17](https://github.com/Sevz17)
+- customfloat & focusMonPointer by [Stivvo](https://github.com/Stivvo)
+- movestack by [ss7m](https://github.com/ss7m)
+- swallow & monitor-config patches by [PalanixYT](https://github.com/PalanixYT)
+- namedscratchpads and keyboard layout status are my own patches
+- touchscreen by [Unprex](https://github.com/Unprex) & [fauxmight](https://github.com/fauxmight)
+
 # dwl - dwm for Wayland
 
 Join us on our [Discord server] or at [#dwl] on irc.libera.chat.
