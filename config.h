@@ -17,12 +17,12 @@ static const char *const autostart[] = {
 static const int tagcount = 9;
 
 static const Rule rules[] = {
-	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor */
+	/* app_id     title       tags mask     isfloating  isterm  noswallow  monitor scratchkey*/
 	/* examples:
 	{ "Gimp",     NULL,       0,            1,          0,      1,         -1 },
 	*/
-	{ "Alacritty", NULL,      0,            0,          1,      0,         -1 },
-	{ "firefox",  NULL,       1 << 8,       0,          0,      1,         -1 },
+	{ "firefox",  NULL,       1 << 8,       0,          0,      1,         -1,     0},
+	{ NULL,     "scratchpad", 0,            1,          0,      0,         -1,     's' },
 };
 
 /* layout(s) */
@@ -121,11 +121,15 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 static const char *termcmd[] = { "alacritty", NULL };
 static const char *menucmd[] = { "wofi", "--show", "drun", "-i", "-p", "Execute:", NULL };
 
+/* named scratchpads - First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = { "s", "alacritty", "-t", "scratchpad", NULL };
+
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = termcmd} },
+	{ MODKEY,                    XKB_KEY_u,          togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_J,          movestack,      {.i = +1} },
