@@ -9,7 +9,12 @@ static const float fullscreen_bg[]         = {0.1, 0.1, 0.1, 1.0};
 
 /* Autostart */
 static const char *const autostart[] = {
+	"sh", "-c", "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=$nameofcompositor", NULL,
 	"sh", "-c", "swaybg -i $HOME/.wallpapers/MoonlightMeditation.jpg -m fill", NULL,
+	"sh", "-c", "LD_LIBRARY_PATH=/usr/lib/yambar yambar -c $HOME/.config/yambar/config-dwl.yml", NULL,
+	"sh", "-c", "mako", NULL,
+	"sh", "-c", "redshift", NULL,
+	"sh", "-c", "wl-paste -t text --watch clipman store", NULL,
 	NULL /* terminate */
 };
 
@@ -49,10 +54,10 @@ static const MonitorRule monrules[] = {
 	*/
 	{ "HDMI-A-1", 0.5,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 1920, 1080, 60,       0 },
 	// { "HDMI-A-1", 0.5,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 3840, 2160, 30,       0 },
-  { "eDP-1",    0.5,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 1920, 0, 1920, 1080, 60,       0 },
+	{ "eDP-1",    0.5,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 1920, 0, 1920, 1080, 60,       0 },
 	{ "Virtual-1",0.55, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 1920, 1080, 60,       0 },
 	/* defaults */
-	{ NULL,       0.55, 1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 1920, 1080, 60,       0 },
+	{ NULL,       0.55, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 1920, 1080, 60,       0 },
 };
 
 /* keyboard */
@@ -142,8 +147,8 @@ static const char *chrocmd[] = { "chromium", "--enable-features=UseOzonePlatform
 // xclip -selection clipboard -o | wl-copy
 
 /* namedscratchpads - First arg only serves to match against key in rules*/
-static const char *tmuxcmd[] = { "t", "alacritty", "-t", "termbox", "-e", "tmuxdd", NULL };
-static const char *chatcmd[] = { "c", "alacritty", "-t", "chatbox", "-e", "hangups", NULL };
+static const char *tmuxcmd[] = { "t", "alacritty", "-t", "termbox", "-e", "tmuxsession", "system", NULL };
+static const char *chatcmd[] = { "c", "alacritty", "-t", "chatbox", "-e", "tmuxsession", "slack", NULL };
 static const char *calccmd[] = { "a", "alacritty", "-t", "calcbox", "-e", "simplecalc", NULL };
 static const char *htopcmd[] = { "i", "alacritty", "-t", "htopbox", "-e", "htop", NULL };
 
@@ -198,7 +203,7 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_v,          spawn,          SHCMD("clipman pick --tool=bemenu --tool-args='-i'") },
 	{ MODKEY,                    XKB_KEY_b,          spawn,          SHCMD("calibre") },
 	{ MODKEY,                    XKB_KEY_m,          setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_M,          spawn,          SHCMD("LD_LIBRARY_PATH=/opt/spotify LD_PRELOAD=/usr/local/lib/spotify-adblock.so /opt/spotify/spotify")},
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_M,          spawn,          SHCMD("env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --uri=%U")},
 	{ MODKEY,                    XKB_KEY_space,      setlayout,      {0} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_space,      togglefloating, {0} },
 	// { MODKEY,                    XKB_KEY_0,          view,           {.ui = ~0} },

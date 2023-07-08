@@ -2,33 +2,37 @@
 
 This is a custom build of dwl adapted for my workflow. Feel free to use it, fork it, improve it.
 
-## TODO
-- fix main screen not showing on laptop screen
+## Patches and features
+
+- XWayland
+- alwayscenter
+- autostart
+- customfloat
+- monitor-config
+- movestack
+- namedscratchpads
+- swallow
+- unclutter
+
+## Roadmap 
+
+- keybord layout status (see loumray dwl repo)
+https://gitlab.com/loumray/dwl/-/commit/32b76aafcbf17ce2502ec751ad25b18b9a0df44f
+
+- shiftview patch
+- Touchscreen support whenever proper support patch is available
 
 - patch with touchpad and mouse different setting:
 https://github.com/djpohly/dwl/issues/372
 
-- patch for  bottom stack layout
+- patch for bottom stack layout
 - cycle layouts then?
 - patch pertag -> so mfact layout are per tag
 
 - adjust scratchpad to move to appear on focused monitor instead of origin ?
 (see focusmon...?)
 
-## Patches and features
-
-- XWayland
-<!-- - alwayscenter -->
-4 <!-- - autostart -->
-<!-- - customfloat -->
-<!-- - keybord layout status -->
-x1 <!-- - monitor-config -->
-2 <!-- - movestack -->
- <!-- - namedscratchpads -->
-3 <!-- - shiftview -->
-5 <!-- - swallow -->
-<!-- - touchscreen -->
-6 <!-- - unclutter -->
+- review and update contributors of latest patches
 
 ## Credits
 
