@@ -17,7 +17,6 @@ This is a custom build of dwl adapted for my workflow. Feel free to use it, fork
 ## Roadmap 
 
 - keybord layout status (see loumray dwl repo)
-https://gitlab.com/loumray/dwl/-/commit/32b76aafcbf17ce2502ec751ad25b18b9a0df44f
 
 - shiftview patch
 - Touchscreen support whenever proper support patch is available
