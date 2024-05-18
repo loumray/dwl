@@ -142,6 +142,7 @@ struct Client {
 	uint32_t resize; /* configure serial of a pending resize */
 	pid_t pid;
 	Client *swallowing, *swallowedby;
+	char scratchkey;
 };
 
 typedef struct {
@@ -233,6 +234,7 @@ typedef struct {
 	int isterm;
 	int noswallow;
 	int monitor;
+	const char scratchkey;
 	int x;
 	int y;
 	float w;
@@ -339,12 +341,16 @@ static void setpsel(struct wl_listener *listener, void *data);
 static void setsel(struct wl_listener *listener, void *data);
 static void setup(void);
 static void spawn(const Arg *arg);
+static void spawnscratch(const Arg *arg);
 static void startdrag(struct wl_listener *listener, void *data);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglefloating(const Arg *arg);
 static void togglefullscreen(const Arg *arg);
+static void togglescratch(const Arg *arg);
+static void focusortogglescratch(const Arg *arg);
+static void focusortogglematchingscratch(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unlocksession(struct wl_listener *listener, void *data);
@@ -481,6 +487,7 @@ applyrules(Client *c)
 	Monitor *mon = selmon, *m;
 
 	c->isfloating = client_is_float_type(c);
+	c->scratchkey = 0;
 	if (!(appid = client_get_appid(c)))
 		appid = broken;
 	if (!(title = client_get_title(c)))
@@ -494,6 +501,7 @@ applyrules(Client *c)
 			c->isfloating = r->isfloating;
 			c->isterm     = r->isterm;
 			c->noswallow  = r->noswallow;
+			c->scratchkey = r->scratchkey;
 			newtags |= r->tags;
 			i = 0;
 			wl_list_for_each(m, &mons, link) {
@@ -2781,6 +2789,16 @@ spawn(const Arg *arg)
 	}
 }
 
+void spawnscratch(const Arg *arg)
+{
+	if (fork() == 0) {
+		dup2(STDERR_FILENO, STDOUT_FILENO);
+		setsid();
+		execvp(((char **)arg->v)[1], ((char **)arg->v)+1);
+		die("dwl: execvp %s failed:", ((char **)arg->v)[1]);
+	}
+}
+
 void
 startdrag(struct wl_listener *listener, void *data)
 {
@@ -2862,6 +2880,114 @@ togglefullscreen(const Arg *arg)
 	Client *sel = focustop(selmon);
 	if (sel)
 		setfullscreen(sel, !sel->isfullscreen);
+}
+
+void
+togglescratch(const Arg *arg)
+{
+	Client *c;
+	unsigned int found = 0;
+
+	/* search for first window that matches the scratchkey */
+	wl_list_for_each(c, &clients, link)
+		if (c->scratchkey == ((char**)arg->v)[0][0]) {
+			found = 1;
+			break;
+		}
+
+	if (found) {
+		c->tags = VISIBLEON(c, selmon) ? 0 : selmon->tagset[selmon->seltags];
+
+		focusclient(c->tags == 0 ? focustop(selmon) : c, 1);
+		arrange(selmon);
+	} else{
+		spawnscratch(arg);
+	}
+}
+
+void
+focusortogglescratch(const Arg *arg)
+{
+	Client *c;
+	unsigned int found = 0;
+
+	/* search for first window that matches the scratchkey */
+	wl_list_for_each(c, &clients, link)
+		if (c->scratchkey == ((char**)arg->v)[0][0]) {
+			found = 1;
+			break;
+		}
+
+	if (found) {
+		if (VISIBLEON(c, selmon)) {
+			if (focustop(selmon) == c) {
+				// hide
+				c->tags = 0;
+				focusclient(focustop(selmon), 1);
+			} else {
+				// focus
+				focusclient(c, 1);
+			}
+		} else {
+			// show
+			c->tags = selmon->tagset[selmon->seltags];
+			focusclient(c, 1);
+		}
+		arrange(selmon);
+	} else{
+		spawnscratch(arg);
+	}
+}
+
+void
+focusortogglematchingscratch(const Arg *arg)
+{
+	Client *c;
+	unsigned int found = 0;
+	unsigned int hide = 0;
+
+	wl_list_for_each(c, &clients, link) {
+		if (c->scratchkey == 0) {
+			continue;
+		}
+		if (c->scratchkey == ((char**)arg->v)[0][0]) {
+			if (VISIBLEON(c, selmon)) {
+				if (found == 1) {
+					if (hide == 1) {
+						c->tags = 0;
+						focusclient(focustop(selmon), 1);
+					}
+					continue;
+				}
+				if (focustop(selmon) == c) {
+					// hide
+					c->tags = 0;
+					focusclient(focustop(selmon), 1);
+					hide = 1;
+				} else {
+					// focus
+					focusclient(c, 1);
+				}
+			} else {
+				// show
+				c->tags = selmon->tagset[selmon->seltags];
+				// focus
+				focusclient(c, 1);
+			}
+			found = 1;
+			continue;
+		}
+		if (VISIBLEON(c, selmon)) {
+			// hide
+			c->tags = 0;
+		}
+	}
+
+	if (found) {
+		arrange(selmon);
+	} else {
+		spawnscratch(arg);
+	}
 }
 
 void

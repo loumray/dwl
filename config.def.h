@@ -29,12 +29,12 @@ static const char *const autostart[] = {
 
 
 static const Rule rules[] = {
-	/* app_id             title       tags mask     isfloating                     monitor   x   y   width   height */
-	/* app_id             title       tags mask     isfloating  isterm  noswallow  monitor   x   y   width   height */
+	/* app_id             title         tags mask     isfloating  isterm  noswallow  monitor   x   y   width   height   scratchkey */
 	/* examples: */
-	{ "Gimp_EXAMPLE",     NULL,       0,            1,          0,      1,         -1,       0,  0,  1000,   0.75 }, /* Start on currently visible tags floating, not tiled */
-	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,          0,      1,         -1,       0,  0,  0,      0    }, /* Start on ONLY tag "9" */
-	{ "foot",             NULL,       0,            0,          1,      1,         -1        0,  0,  0,      0    }, /* make foot swallow clients that are not foot */
+	{ "Gimp_EXAMPLE",     NULL,         0,            1,          0,      1,         -1,       0,  0,  1000,   0.75,    0   }, /* Start on currently visible tags floating, not tiled */
+	{ "firefox_EXAMPLE",  NULL,         1 << 8,       0,          0,      1,         -1,       0,  0,  0,      0,       0   }, /* Start on ONLY tag "9" */
+	{ "foot",             NULL,         0,            0,          1,      1,         -1        0,  0,  0,      0,       0   }, /* make foot swallow clients that are not foot */
+	{ NULL,              "scratchpad",  0,            1,          -1,     1          -1        0,  0,  0,      0,       's' },
 };
 
 /* layout(s) */
@@ -129,11 +129,17 @@ static const int cursor_timeout = 5;
 static const char *termcmd[] = { "foot", NULL };
 static const char *menucmd[] = { "wmenu-run", NULL };
 
+/* named scratchpads - First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = { "s", "alacritty", "-t", "scratchpad", NULL };
+
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  key                 function        argument */
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = termcmd} },
+	{ MODKEY,                    XKB_KEY_grave,      togglescratch,  {.v = scratchpadcmd } },
+	// { MODKEY,                    XKB_KEY_grave,      focusortogglescratch, {.v = scratchpadcmd } },
+	// { MODKEY,                    XKB_KEY_grave,      focusortogglematchingscratch, {.v = scratchpadcmd } },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_J,          movestack,      {.i = +1} },
