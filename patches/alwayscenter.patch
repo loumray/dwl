@@ -1,0 +1,27 @@
+From 54b6c4591aeae583ea87fabde0d16b81f420288d Mon Sep 17 00:00:00 2001
+From: Guido Cella <guido@guidocella.xyz>
+Date: Fri, 10 May 2024 17:43:33 +0200
+Subject: [PATCH] center floating windows
+
+---
+ dwl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/dwl.c b/dwl.c
+index d508d79..1c3c227 100644
+--- a/dwl.c
++++ b/dwl.c
+@@ -470,6 +470,10 @@ applyrules(Client *c)
+ 			}
+ 		}
+ 	}
++	if (mon) {
++		c->geom.x = (mon->w.width - c->geom.width) / 2 + mon->m.x;
++		c->geom.y = (mon->w.height - c->geom.height) / 2 + mon->m.y;
++	}
+ 	setmon(c, mon, newtags);
+ }
+ 
+-- 
+2.45.0
+
