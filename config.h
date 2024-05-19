@@ -60,19 +60,12 @@ static const Layout layouts[] = {
 /* monitors */
 /* NOTE: ALWAYS add a fallback rule, even if you are completely sure it won't be used */
 static const MonitorRule monrules[] = {
-	/* name       mfact nmaster scale layout       rotate/reflect              x      y  resx  resy  rate        mode adaptive */
+	/* name       mfact  nmaster scale layout       rotate/reflect                x    y */
 	/* example of a HiDPI laptop monitor:
-	{ "eDP-1",    0.5,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 0,    0,    120.000, 1, 0 },
+	{ "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 	*/
-	{ "HDMI-A-1", 0.5f,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f,    1,  1 },
-	{ "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 1920, 0, 1920, 1080, 60.051998f, 1,  1 },
-	// { "HDMI-A-1", 0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 3840, 2160, 30,       0, 1 },
-	{ "Virtual-1",0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f,    1,  1 },
 	/* defaults */
-	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 0,    0,    0.0f,       1,  1 },
-	// mode let's the user decide on how dwl should implement the modes:
-	// -1 Sets a custom mode following the users choice
-	// All other number's set the mode at the index n, 0 is the standard mode; see wlr-randr
+	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 };
 
 /* keyboard */

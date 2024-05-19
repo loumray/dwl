@@ -9,7 +9,6 @@ This is a custom build of dwl adapted for my workflow. Feel free to use it, fork
 - autostart
 - customfloat
 - keybord layout status
-- monitor-config
 - movestack
 - namedscratchpads
 - swallow
@@ -36,7 +35,7 @@ Keep in mind everyone that contributed to this project. Thank you!
 - autostart by [Sevz17](https://github.com/Sevz17)
 - customfloat & focusMonPointer by [Stivvo](https://github.com/Stivvo)
 - movestack by [ss7m](https://github.com/ss7m)
-- swallow & monitor-config patches by [PalanixYT](https://github.com/PalanixYT)
+- swallow by [PalanixYT](https://github.com/PalanixYT)
 - namedscratchpads and keyboard layout status are my own patches
 
 # dwl - dwm for Wayland
