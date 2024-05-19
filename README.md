@@ -1,3 +1,45 @@
+# A custom build of dwl - dwm for Wayland
+
+This is a custom build of dwl adapted for my workflow. Feel free to use it, fork it, improve it.
+
+## Patches and features
+
+- XWayland
+- alwayscenter
+- autostart
+- customfloat
+- keybord layout status
+- monitor-config
+- movestack
+- namedscratchpads
+- shiftview
+- swallow
+- unclutter
+
+## Roadmap 
+
+- keybord layout status (see loumray dwl repo)
+- shiftview patch?
+- Touchscreen support whenever proper support patch is available
+- patch for bottom stack layout
+- cycle layouts then?
+- patch pertag -> so mfact layout are per tag
+- adjust scratchpad to move to appear on focused monitor instead of origin ?
+(see focusmon...?)
+- review and update contributors of latest patches
+
+## Credits
+
+Keep in mind everyone that contributed to this project. Thank you!
+
+- All [dwl contributors](https://github.com/djpohly/dwl/graphs/contributors) & users
+- unclutter, alwayscenter patches by [guidocella](https://github.com/guidocella)
+- autostart by [Sevz17](https://github.com/Sevz17)
+- customfloat & focusMonPointer by [Stivvo](https://github.com/Stivvo)
+- movestack by [ss7m](https://github.com/ss7m)
+- swallow & monitor-config patches by [PalanixYT](https://github.com/PalanixYT)
+- namedscratchpads and keyboard layout status are my own patches
+
 # dwl - dwm for Wayland
 
 Join us on our IRC channel: [#dwl on Libera Chat]  
