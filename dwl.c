@@ -234,11 +234,11 @@ typedef struct {
 	int isterm;
 	int noswallow;
 	int monitor;
-	const char scratchkey;
 	int x;
 	int y;
 	float w;
 	float h;
+	const char scratchkey;
 } Rule;
 
 typedef struct {
