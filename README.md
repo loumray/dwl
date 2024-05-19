@@ -12,7 +12,6 @@ This is a custom build of dwl adapted for my workflow. Feel free to use it, fork
 - monitor-config
 - movestack
 - namedscratchpads
-- shiftview
 - swallow
 - unclutter
 
