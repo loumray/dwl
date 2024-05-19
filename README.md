@@ -7,10 +7,12 @@ This is a custom build of dwl adapted for my workflow. Feel free to use it, fork
 - XWayland
 - alwayscenter
 - autostart
+- bottomstack
 - customfloat
 - keybord layout status
 - movestack
 - namedscratchpads
+- pertag
 - swallow
 - unclutter
 
@@ -19,9 +21,7 @@ This is a custom build of dwl adapted for my workflow. Feel free to use it, fork
 - keybord layout status (see loumray dwl repo)
 - shiftview patch?
 - Touchscreen support whenever proper support patch is available
-- patch for bottom stack layout
-- cycle layouts then?
-- patch pertag -> so mfact layout are per tag
+- cycle layouts?
 - adjust scratchpad to move to appear on focused monitor instead of origin ?
 (see focusmon...?)
 - review and update contributors of latest patches
