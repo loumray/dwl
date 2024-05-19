@@ -55,6 +55,8 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
 };
 
 /* monitors */
@@ -187,6 +189,7 @@ static const Key keys[] = {
 	// { MODKEY,                    XKB_KEY_e,          togglefullscreen, {0} },
 	{ MODKEY,                    XKB_KEY_e,          spawn,          ALCMD("vifm") },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_E,          spawn,          {.v = chrocmd} },
+	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_R,          setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_T,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                    XKB_KEY_y,          spawn,          ALCMD("xplr") },
 	{ MODKEY,                    XKB_KEY_u,          togglescratch,  { .v = tmuxcmd } },
