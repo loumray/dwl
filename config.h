@@ -24,11 +24,12 @@ static int log_level = WLR_ERROR;
 /* Autostart */
 static const char *const autostart[] = {
 	"sh", "-c", "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP", NULL,
+	"sh", "-c", "kanshi", NULL,
 	"sh", "-c", "swaybg -i $HOME/.wallpapers/MoonlightMeditation.jpg -m fill", NULL,
-	"sh", "-c", "LD_LIBRARY_PATH=/usr/lib/yambar yambar -c $HOME/.config/yambar/config-dwl.yml", NULL,
 	"sh", "-c", "mako", NULL,
 	"sh", "-c", "redshift", NULL,
 	"sh", "-c", "wl-paste -t text --watch clipman store", NULL,
+	"sh", "-c", "LD_LIBRARY_PATH=/usr/lib/yambar yambar -c $HOME/.config/yambar/config-dwl.yml", NULL,
 	NULL /* terminate */
 };
 
@@ -59,16 +60,16 @@ static const Layout layouts[] = {
 /* monitors */
 /* NOTE: ALWAYS add a fallback rule, even if you are completely sure it won't be used */
 static const MonitorRule monrules[] = {
-	/* name       mfact nmaster scale layout       rotate/reflect              x      y  resx  resy  rate     mode adaptive */
+	/* name       mfact nmaster scale layout       rotate/reflect              x      y  resx  resy  rate        mode adaptive */
 	/* example of a HiDPI laptop monitor:
 	{ "eDP-1",    0.5,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 0,    0,    120.000, 1, 0 },
 	*/
-	{ "HDMI-A-1", 0.5f,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f, 1,  1 },
-	{ "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 1920, 0, 1920, 1080, 60.000f, 1,  1 },
+	{ "HDMI-A-1", 0.5f,  1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f,    1,  1 },
+	{ "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 1920, 0, 1920, 1080, 60.051998f, 1,  1 },
 	// { "HDMI-A-1", 0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0, 0, 3840, 2160, 30,       0, 1 },
-	{ "Virtual-1",0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f, 1,  1 },
+	{ "Virtual-1",0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 1920, 1080, 60.000f,    1,  1 },
 	/* defaults */
-	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 0,    0,    0.0f,    1,  1 },
+	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, 0,    0, 0,    0,    0.0f,       1,  1 },
 	// mode let's the user decide on how dwl should implement the modes:
 	// -1 Sets a custom mode following the users choice
 	// All other number's set the mode at the index n, 0 is the standard mode; see wlr-randr
@@ -184,6 +185,7 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_F1,         spawn,          SHCMD("alacritty -t configedit -e nvim ~/.local/src/dwl/config.h") },
 	{ MODKEY,                    XKB_KEY_F3,         spawn,          ALCMD("bluetoothctl") },
 	{ MODKEY,                    XKB_KEY_F4,         spawn,          ALCMD("bashmount") },
+	{ MODKEY,                    XKB_KEY_F5,         spawn,          ALCMD("wlay") },
 	{ MODKEY,                    XKB_KEY_Tab,        view,           {0} },
 	// { MODKEY,                    XKB_KEY_semicolon,  shiftview,      { .i = 1 } },
 	{ MODKEY,                    XKB_KEY_q,          killclient,     {0} },
