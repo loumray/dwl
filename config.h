@@ -67,7 +67,7 @@ static const MonitorRule monrules[] = {
 	{ "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 	*/
 	/* defaults */
-	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
+	{ NULL,       0.5f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
 };
 
 /* keyboard */
@@ -160,7 +160,7 @@ static const char *chrocmd[] = { "chromium", "--enable-features=UseOzonePlatform
 
 /* scratchpads */
 static const char *tmuxcmd[] = { "t", "alacritty", "-t", "termbox", "-e", "tmuxdd", NULL };
-static const char *chatcmd[] = { "c", "alacritty", "-t", "chatbox", "-e", "hangups", NULL };
+static const char *chatcmd[] = { "c", "alacritty", "-t", "chatbox", "-e", "weechat", NULL };
 static const char *calccmd[] = { "a", "alacritty", "-t", "calcbox", "-e", "simplecalc", NULL };
 static const char *htopcmd[] = { "i", "alacritty", "-t", "htopbox", "-e", "htop", NULL };
 
